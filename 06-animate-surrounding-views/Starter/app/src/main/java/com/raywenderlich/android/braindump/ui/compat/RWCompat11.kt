@@ -56,27 +56,6 @@ internal class RWCompat11(private val view: View, private val container: View) {
   private var posTop = 0
   private var posBottom = 0
 
-  private val animationControlListener: WindowInsetsAnimationControlListener by lazy {
-    @RequiresApi(Build.VERSION_CODES.R)
-    object : WindowInsetsAnimationControlListener {
-
-      override fun onReady(
-          controller: WindowInsetsAnimationController,
-          types: Int
-      ) {
-        animationController = controller
-      }
-
-      override fun onFinished(controller: WindowInsetsAnimationController) {
-        animationController = null
-      }
-
-      override fun onCancelled(controller: WindowInsetsAnimationController?) {
-        animationController = null
-      }
-    }
-  }
-
   fun setUiWindowInsets() {
     ViewCompat.setOnApplyWindowInsetsListener(container) { _, insets ->
 
