@@ -175,4 +175,11 @@ internal class RWCompat11(private val view: View, private val container: View) {
 
     container.setWindowInsetsAnimationCallback(cb)
   }
+
+  @RequiresApi(Build.VERSION_CODES.R)
+  fun closeKeyboard(view: View) {
+    if (view.rootWindowInsets?.isVisible(WindowInsetsCompat.Type.ime()) == true) {
+      view.windowInsetsController?.hide(WindowInsetsCompat.Type.ime())
+    }
+  }
 }

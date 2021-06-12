@@ -104,6 +104,10 @@ class MainFragment : Fragment(), ActionMode.Callback {
       setHasFixedSize(true)
       layoutManager = manager
       adapter = mainAdapter
+      setOnTouchListener { _, _ ->
+        rwCompat.closeKeyboard(binding.etContent)
+        false
+      }
     }
 
     binding.etContent.addTextChangedListener(object : TextWatcher {
