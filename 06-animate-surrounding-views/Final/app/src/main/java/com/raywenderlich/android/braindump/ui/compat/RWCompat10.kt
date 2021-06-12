@@ -35,14 +35,9 @@
 package com.raywenderlich.android.braindump.ui.compat
 
 import android.content.Context
-import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 
 internal class RWCompat10 {
 
   fun createLinearLayoutManager(context: Context) = LinearLayoutManager(context)
-
-  fun closeKeyboard(view: View) {
-    view.clearFocus()
-  }
 }

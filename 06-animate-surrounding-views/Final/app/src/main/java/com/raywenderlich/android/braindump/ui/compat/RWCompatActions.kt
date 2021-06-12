@@ -56,6 +56,4 @@ interface RWCompatActions {
    * [androidx.recyclerview.widget.RecyclerView].
    */
   fun createLinearLayoutManager(context: Context): LinearLayoutManager
-
-  fun closeKeyboard(view: View)
 }

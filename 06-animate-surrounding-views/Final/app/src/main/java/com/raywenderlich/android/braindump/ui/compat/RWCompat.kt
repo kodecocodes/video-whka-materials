@@ -84,12 +84,4 @@ class RWCompat(private val view: View, private val container: View) : RWCompatAc
       rwCompat10.createLinearLayoutManager(context)
     }
   }
-
-  override fun closeKeyboard(view: View) {
-    if (isAtLeastAndroid11()) {
-      rwCompat11.closeKeyboard(view)
-    } else {
-      rwCompat10.closeKeyboard(view)
-    }
-  }
 }
