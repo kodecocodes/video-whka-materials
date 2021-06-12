@@ -1,0 +1,19 @@
+<resources>
+  <string name="app_name">Brain Dump</string>
+
+  <!-- Toolbar -->
+  <string name="app_header">Brain Dump 🧠</string>
+
+  <!-- Actions -->
+  <string name="action_delete">Delete</string>
+  <string name="action_selected">%d selected</string>
+
+  <!-- Note -->
+  <string name="note_add_note">Add new note</string>
+
+  <!-- Content description -->
+  <string name="description_create">Add a new note</string>
+
+  <string name="description_note_description">This is your note</string>
+  <string name="description_note_timestamp">This is your note timestamp</string>
+</resources>
