@@ -38,6 +38,7 @@ import android.content.Context
 import android.graphics.Insets
 import android.os.Build
 import android.os.CancellationSignal
+import android.util.Log
 import android.view.*
 import android.view.animation.LinearInterpolator
 import android.widget.AbsListView
@@ -128,8 +129,10 @@ internal class RWCompat11(private val view: View, private val container: View) {
 
         scrolledY += dy
 
-        if (scrolledY < 0) {
-          scrolledY = 0
+        val navBar = view.rootWindowInsets?.getInsets(WindowInsetsCompat.Type.navigationBars())!!
+
+        if (scrolledY < navBar.bottom) {
+          scrolledY = navBar.bottom
         }
 
         animationController?.setInsetsAndAlpha(
@@ -162,6 +165,10 @@ internal class RWCompat11(private val view: View, private val container: View) {
           animations: MutableList<WindowInsetsAnimation>): WindowInsets {
 
         posBottom = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
+
+        if (!insets.isVisible(WindowInsetsCompat.Type.ime())) {
+          posBottom += insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
+        }
 
         container.updateLayoutParams<ViewGroup.MarginLayoutParams> {
           updateMargins(
