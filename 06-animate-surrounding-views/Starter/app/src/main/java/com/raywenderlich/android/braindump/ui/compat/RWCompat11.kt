@@ -103,9 +103,10 @@ internal class RWCompat11(private val view: View, private val container: View) {
   @RequiresApi(Build.VERSION_CODES.R)
   fun animateKeyboardDisplay() {
     val cb = object : WindowInsetsAnimation.Callback(DISPATCH_MODE_STOP) {
+
       override fun onProgress(insets: WindowInsets, animations: MutableList<WindowInsetsAnimation>): WindowInsets {
-        posBottom = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom +
-            insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom
+        posBottom = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
+
         container.updateLayoutParams<ViewGroup.MarginLayoutParams> {
           updateMargins(
               top = posTop,
