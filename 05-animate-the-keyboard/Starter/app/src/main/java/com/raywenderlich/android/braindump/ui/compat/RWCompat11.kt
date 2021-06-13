@@ -35,20 +35,14 @@
 package com.raywenderlich.android.braindump.ui.compat
 
 import android.content.Context
-import android.graphics.Insets
 import android.os.Build
-import android.os.CancellationSignal
-import android.util.Log
 import android.view.*
-import android.view.animation.LinearInterpolator
-import android.widget.AbsListView
 import androidx.annotation.RequiresApi
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updateMargins
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.*
 
 internal class RWCompat11(private val view: View, private val container: View) {
 
@@ -64,8 +58,6 @@ internal class RWCompat11(private val view: View, private val container: View) {
         posTop = insets.getInsets(WindowInsetsCompat.Type.systemBars()).top
         posBottom = insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom
       }
-
-      Log.d("cmota", "posBottom = $posBottom")
 
       container.updateLayoutParams<ViewGroup.MarginLayoutParams> {
         updateMargins(
