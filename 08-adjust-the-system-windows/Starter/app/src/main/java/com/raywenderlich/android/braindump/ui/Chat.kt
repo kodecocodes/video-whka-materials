@@ -47,13 +47,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.FocusState
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -110,9 +106,6 @@ fun Chat() {
 
       ) {
 
-        val keyboardController = LocalSoftwareKeyboardController.current
-        val focusRequester = FocusRequester()
-
         TextField(
             value = newNote.value,
             onValueChange = { newNote.value = it },
@@ -121,7 +114,6 @@ fun Chat() {
               .fillMaxWidth()
               .background(color = Color.Transparent, shape = CircleShape)
               .border(BorderStroke(2.dp, color = colorAccent), shape = CircleShape)
-              .focusRequester(focusRequester)
               .onFocusChanged { focusState ->
                 active.value = focusState.isFocused
               },
@@ -141,12 +133,6 @@ fun Chat() {
             ),
             shape = CircleShape
         )
-
-        DisposableEffect(key1 = Unit) {
-
-          focusRequester.requestFocus()
-          onDispose {  }
-        }
       }
 
       Spacer(modifier = Modifier.width(8.dp))
