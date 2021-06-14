@@ -42,12 +42,17 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -62,6 +67,7 @@ import com.raywenderlich.android.braindump.ui.theme.colorAccent
 import com.raywenderlich.android.braindump.ui.theme.colorPrimary
 import kotlinx.coroutines.launch
 
+@ExperimentalAnimatedInsets
 @Composable
 fun Chat() {
   val scope = rememberCoroutineScope()
@@ -72,88 +78,87 @@ fun Chat() {
   val scrollState = rememberLazyListState()
 
   Column(
-      modifier = Modifier.fillMaxSize()
+    modifier = Modifier.fillMaxSize()
   ) {
 
     LazyColumn(
-        modifier = Modifier
-          .fillMaxSize()
-          .weight(1f)
-          .padding(start = 16.dp, end = 16.dp),
-        contentPadding = rememberInsetsPaddingValues(
-          LocalWindowInsets.current.statusBars,
-          applyBottom = false
-        ),
-        state = scrollState,
-        reverseLayout = true,
-        content = {
+      modifier = Modifier
+        .fillMaxSize()
+        .weight(1f)
+        .padding(start = 16.dp, end = 16.dp),
+      state = scrollState,
+      contentPadding = rememberInsetsPaddingValues(
+        LocalWindowInsets.current.statusBars,
+        applyBottom = false,
+      ),
+      reverseLayout = true,
+      content = {
 
-          items(notes.value) {
-            AddChatBubble(it)
-          }
-        })
+        items(notes.value) {
+          AddChatBubble(it)
+        }
+      })
 
     Row(
-        modifier = Modifier
-          .padding(8.dp)
-          .navigationBarsWithImePadding(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.End
+      modifier = Modifier
+        .navigationBarsWithImePadding()
+        .padding(8.dp),
+      verticalAlignment = Alignment.CenterVertically,
+      horizontalArrangement = Arrangement.End
     ) {
 
       val active = remember { mutableStateOf(false) }
       val newNote = remember { mutableStateOf("") }
 
       Row(
-          modifier = Modifier
-            .fillMaxWidth()
-            .weight(1f)
+        modifier = Modifier
+          .fillMaxWidth()
+          .weight(1f)
 
       ) {
-
         TextField(
-            value = newNote.value,
-            onValueChange = { newNote.value = it },
-            textStyle = MaterialTheme.typography.h1,
-            modifier = Modifier
-              .fillMaxWidth()
-              .background(color = Color.Transparent, shape = CircleShape)
-              .border(BorderStroke(2.dp, color = colorAccent), shape = CircleShape)
-              .onFocusChanged { focusState ->
-                active.value = focusState.isFocused
-              },
-            label = {
-              if (!active.value) {
-                Text(
-                    text = stringResource(id = R.string.note_add_note)
-                )
-              }
+          value = newNote.value,
+          onValueChange = { newNote.value = it },
+          textStyle = MaterialTheme.typography.h1,
+          modifier = Modifier
+            .fillMaxWidth()
+            .background(color = Color.Transparent, shape = CircleShape)
+            .border(BorderStroke(2.dp, color = colorAccent), shape = CircleShape)
+            .onFocusChanged { focusState ->
+              active.value = focusState.isFocused
             },
-            colors = TextFieldDefaults.textFieldColors(
-                focusedIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                backgroundColor = Color.Transparent,
-                cursorColor = colorAccent
-            ),
-            shape = CircleShape
+          label = {
+            if (!active.value) {
+              Text(
+                text = stringResource(id = R.string.note_add_note)
+              )
+            }
+          },
+          colors = TextFieldDefaults.textFieldColors(
+            focusedIndicatorColor = Color.Transparent,
+            disabledIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
+            backgroundColor = Color.Transparent,
+            cursorColor = colorAccent
+          ),
+          shape = CircleShape
         )
       }
 
       Spacer(modifier = Modifier.width(8.dp))
 
       Row(modifier = Modifier
-          .clickable {
-            notes.value =
-                listOf(Note(newNote.value, System.currentTimeMillis())) + notes.value
+        .clickable {
+          notes.value =
+            listOf(Note(newNote.value, System.currentTimeMillis())) + notes.value
 
-            newNote.value = ""
-            scope.launch {
-              scrollState.scrollToItem(0)
-            }
-
-            saveAllNotes(context, notes.value)
+          newNote.value = ""
+          scope.launch {
+            scrollState.scrollToItem(0)
           }
+
+          saveAllNotes(context, notes.value)
+        }
 
       ) {
         val image = if (active.value && newNote.value.isNotEmpty()) {
@@ -165,9 +170,9 @@ fun Chat() {
         val description = stringResource(id = R.string.description_create)
 
         Image(
-            painter = image,
-            contentDescription = description,
-            modifier = Modifier.size(35.dp)
+          painter = image,
+          contentDescription = description,
+          modifier = Modifier.size(35.dp)
         )
       }
     }
@@ -177,21 +182,21 @@ fun Chat() {
 @Composable
 fun AddChatBubble(note: Note) {
   Row(
-      modifier = Modifier.fillMaxWidth(),
-      horizontalArrangement = Arrangement.End
+    modifier = Modifier.fillMaxWidth(),
+    horizontalArrangement = Arrangement.End
   ) {
     Card(
-        backgroundColor = colorPrimary,
-        shape = RoundedCornerShape(8.dp),
-        modifier = Modifier.clip(RoundedCornerShape(8.dp))
+      backgroundColor = colorPrimary,
+      shape = RoundedCornerShape(8.dp),
+      modifier = Modifier.clip(RoundedCornerShape(8.dp))
     ) {
       Column(modifier = Modifier.padding(8.dp)) {
         Text(
-            text = note.content
+          text = note.content
         )
 
         Text(
-            text = timestampToDateConversion(note.timestamp)
+          text = timestampToDateConversion(note.timestamp)
         )
       }
     }
