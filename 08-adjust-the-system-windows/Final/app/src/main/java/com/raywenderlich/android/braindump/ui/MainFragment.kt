@@ -35,16 +35,12 @@
 package com.raywenderlich.android.braindump.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import com.google.accompanist.insets.ExperimentalAnimatedInsets
-import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.raywenderlich.android.braindump.ui.theme.RWTheme
 
@@ -64,14 +60,9 @@ class MainFragment : Fragment() {
     setContent {
       RWTheme(
           content = {
-
-            val keyboardVisible = LocalWindowInsets.current.ime.isVisible
-            val keyboardShown =  remember { mutableStateOf(keyboardVisible) }
-            Log.d("cmota", "+keyboardShown=${keyboardShown.value}")
-
-            //ProvideWindowInsets(windowInsetsAnimationsEnabled = true) {
+            ProvideWindowInsets(windowInsetsAnimationsEnabled = true) {
               MainScreen()
-            //}
+            }
           }
       )
     }
