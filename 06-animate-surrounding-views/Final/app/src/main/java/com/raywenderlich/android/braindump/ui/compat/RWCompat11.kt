@@ -166,8 +166,10 @@ internal class RWCompat11(private val view: View, private val container: View) {
 
         posBottom = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
 
-        if (!insets.isVisible(WindowInsetsCompat.Type.ime())) {
-          posBottom += insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
+        val navBar = view.rootWindowInsets?.getInsets(WindowInsetsCompat.Type.navigationBars())!!
+
+        if (posBottom < navBar.bottom) {
+          posBottom = navBar.bottom
         }
 
         container.updateLayoutParams<ViewGroup.MarginLayoutParams> {

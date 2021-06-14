@@ -1,0 +1,12 @@
+<resources>
+  <string name="app_name">Brain Dump</string>
+
+  <!-- Toolbar -->
+  <string name="app_header">Brain Dump 🧠</string>
+
+  <!-- Note -->
+  <string name="note_add_note">Add new note</string>
+
+  <!-- Content description -->
+  <string name="description_create">Add a new note</string>
+</resources>

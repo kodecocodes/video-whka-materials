@@ -40,10 +40,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
+import com.google.accompanist.insets.ExperimentalAnimatedInsets
+import com.google.accompanist.insets.ProvideWindowInsets
 import com.raywenderlich.android.braindump.ui.theme.RWTheme
 
 class MainFragment : Fragment() {
 
+  @OptIn(ExperimentalAnimatedInsets::class)
   override fun onCreateView(
       inflater: LayoutInflater,
       container: ViewGroup?,
@@ -57,7 +60,9 @@ class MainFragment : Fragment() {
     setContent {
       RWTheme(
           content = {
-            MainScreen()
+            ProvideWindowInsets(windowInsetsAnimationsEnabled = false) {
+              MainScreen()
+            }
           }
       )
     }

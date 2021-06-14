@@ -48,7 +48,6 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
@@ -57,6 +56,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.insets.LocalWindowInsets
 import com.raywenderlich.android.braindump.compose.R
 import com.raywenderlich.android.braindump.getAllNotes
 import com.raywenderlich.android.braindump.model.Note
@@ -100,7 +100,8 @@ fun Chat() {
         horizontalArrangement = Arrangement.End
     ) {
 
-      val active = remember { mutableStateOf(false) }
+      val keyboardVisible = LocalWindowInsets.current.ime.isVisible
+      val active = remember { mutableStateOf(keyboardVisible) }
       val newNote = remember { mutableStateOf("") }
 
       Row(
@@ -110,7 +111,6 @@ fun Chat() {
 
       ) {
 
-        val keyboardController = LocalSoftwareKeyboardController.current
         val focusRequester = FocusRequester()
 
         TextField(
@@ -142,14 +142,15 @@ fun Chat() {
             shape = CircleShape
         )
 
-        DisposableEffect(key1 = Unit) {
-
+        DisposableEffect(Unit) {
           focusRequester.requestFocus()
-          onDispose {  }
+          onDispose { }
         }
       }
 
       Spacer(modifier = Modifier.width(8.dp))
+
+      val keyboardController = LocalSoftwareKeyboardController.current
 
       Row(modifier = Modifier
           .clickable {
@@ -162,6 +163,8 @@ fun Chat() {
             }
 
             saveAllNotes(context, notes.value)
+
+            keyboardController?.hide()
           }
 
       ) {
