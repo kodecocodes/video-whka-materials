@@ -34,19 +34,15 @@
 
 package com.raywenderlich.android.braindump.ui
 
-import android.util.Log
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.ExperimentalAnimatedInsets
-import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.navigationBarsPadding
 import com.google.accompanist.insets.statusBarsPadding
 import com.raywenderlich.android.braindump.compose.R
@@ -70,9 +66,6 @@ fun MainScreen() {
       )
     }
   ) {
-    val keyboardVisible = LocalWindowInsets.current.ime.isVisible
-    val keyboardShown =  remember { mutableStateOf(keyboardVisible) }
-    Log.d("cmota", "-keyboardShown=${keyboardShown.value}")
     Chat()
   }
 }
