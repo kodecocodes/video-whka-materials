@@ -46,24 +46,24 @@ import com.raywenderlich.android.braindump.ui.theme.RWTheme
 
 class MainFragment : Fragment() {
 
-  @OptIn(ExperimentalAnimatedInsets::class)
+  @ExperimentalAnimatedInsets
   override fun onCreateView(
-      inflater: LayoutInflater,
-      container: ViewGroup?,
-      savedInstanceState: Bundle?
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
   ): View = ComposeView(inflater.context).apply {
     layoutParams = ViewGroup.LayoutParams(
-        ViewGroup.LayoutParams.MATCH_PARENT,
-        ViewGroup.LayoutParams.MATCH_PARENT
+      ViewGroup.LayoutParams.MATCH_PARENT,
+      ViewGroup.LayoutParams.MATCH_PARENT
     )
 
     setContent {
       RWTheme(
-          content = {
-            ProvideWindowInsets(windowInsetsAnimationsEnabled = true) {
-              MainScreen()
-            }
+        content = {
+          ProvideWindowInsets(windowInsetsAnimationsEnabled = true) {
+            MainScreen()
           }
+        }
       )
     }
   }
