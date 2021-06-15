@@ -60,9 +60,7 @@ class MainFragment : Fragment() {
     setContent {
       RWTheme(
           content = {
-            ProvideWindowInsets(windowInsetsAnimationsEnabled = false) {
-              MainScreen()
-            }
+            MainScreen()
           }
       )
     }

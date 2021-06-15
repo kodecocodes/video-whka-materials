@@ -53,7 +53,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.LocalWindowInsets
-import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.raywenderlich.android.braindump.compose.R
 import com.raywenderlich.android.braindump.getAllNotes
@@ -122,8 +121,7 @@ fun Chat() {
               .border(BorderStroke(2.dp, color = colorAccent), shape = CircleShape)
               .onFocusChanged { focusState ->
                 active.value = focusState.isFocused
-              }
-              .navigationBarsWithImePadding(),
+              },
             label = {
               if (!active.value) {
                 Text(

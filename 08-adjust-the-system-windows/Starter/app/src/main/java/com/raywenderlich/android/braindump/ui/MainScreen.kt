@@ -38,12 +38,9 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsPadding
 import com.raywenderlich.android.braindump.compose.R
 import com.raywenderlich.android.braindump.ui.theme.colorPrimary
 
@@ -56,9 +53,6 @@ fun MainScreen() {
             title = {
               Text(stringResource(id = R.string.app_header))
             },
-            modifier = Modifier
-              .statusBarsPadding()
-              .navigationBarsWithImePadding(),
             backgroundColor = colorPrimary,
             contentColor = Color.White,
             elevation = 0.dp
